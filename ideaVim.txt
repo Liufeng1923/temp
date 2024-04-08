@@ -1,0 +1,37 @@
+" set keep-english-in-normal
+" set keep-english-in-normal-and-restore-in-insert
+set nu
+set relativenumber
+
+inoremap jj <ESC>
+nnoremap H ^
+nnoremap L $
+nnoremap # i#
+nnoremap ( a(
+vnoremap H ^
+vnoremap L $
+
+
+" go to somewhere
+nnoremap ga :<C-u>action GotoAction<CR>
+nnoremap gc :<C-u>action GotoClass<CR>
+nnoremap gd :<C-u>action GotoDeclaration<CR>
+nnoremap gs :<C-u>action GotoSuperMethod<CR>
+nnoremap gi :<C-u>action GotoImplementation<CR>
+nnoremap gf :<C-u>action GotoFile<CR>
+nnoremap gu :<C-u>action ShowUsages<CR>
+
+let mapleader = "\<space>"
+nnoremap <Leader>re :<C-u>action RenameElement<CR>
+nnoremap <Leader>sw :<C-u>action SurroundWith<CR>
+nnoremap <leader>y yiw
+nnoremap <leader>p ciw<C-r>0<Esc>
+nnoremap dd "_dd
+" nnoremap <leader>y viwy
+nnoremap <leader>x viwxi
+" nnoremap <leader>p viwp
+nnoremap <leader>d viwxxf)x
+nnoremap <leader>dl d$
+nnoremap <leader>o o<Esc>
+nnoremap <leader>O O<Esc>
+vnoremap x xi
