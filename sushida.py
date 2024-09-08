@@ -4,7 +4,6 @@ import numpy as np
 from paddleocr import PaddleOCR
 import keyboard  # 监听键盘按键
 import time
-import argparse
 
 # 初始化 PaddleOCR
 ocr = PaddleOCR(use_angle_cls=True, lang="en")
@@ -21,9 +20,12 @@ def render_doc_text(image):
     return " ".join(txts)
 
 
-def capture_and_ocr(region):
+def capture_and_ocr():
     # 使用 pyautogui 在屏幕上的某个区域进行截图
-    screenshot = pag.screenshot(region=region)
+    # 例如截取屏幕的 x=90, y=230 到 x=400, y=260 的区域
+    screenshot = pag.screenshot(
+        region=(487, 899, 1117, 973)
+    )  # (left, top, width, height)
 
     # OCR 识别并获取文本
     string = render_doc_text(screenshot)
@@ -32,29 +34,10 @@ def capture_and_ocr(region):
     pag.write(string)
 
 
-def main():
-    # 设置命令行参数解析
-    parser = argparse.ArgumentParser(description="Capture screen and perform OCR.")
-    parser.add_argument(
-        "--region",
-        type=int,
-        nargs=4,
-        metavar=("LEFT", "TOP", "WIDTH", "HEIGHT"),
-        required=True,
-        help="The region to capture in the format: LEFT TOP WIDTH HEIGHT",
-    )
-    args = parser.parse_args()
+# 主循环监听按键 F1
+while True:
+    if keyboard.is_pressed("space"):  # 当按下 F1 时
+        capture_and_ocr()
 
-    region = tuple(args.region)
-
-    # 主循环监听按键 F1
-    while True:
-        if keyboard.is_pressed("space"):  # 当按下空格键时
-            capture_and_ocr(region)
-
-            # 避免频繁触发，稍微暂停一会儿
-            time.sleep(0.5)
-
-
-if __name__ == "__main__":
-    main()
+        # 避免频繁触发，稍微暂停一会儿
+        time.sleep(0.5)
